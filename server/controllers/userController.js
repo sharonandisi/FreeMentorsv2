@@ -24,20 +24,12 @@ class user {
              bio: bio.trim(),
              expertise:expertise.trim(),
          });
-         const token = authHelper.generateToken({id:rows[0].id});
+         const token = authHelper.generateToken(rows[0]);
          return res.status(201).json({
              status: 201,
              message: 'successful',
              data: ({
-                 token,
-                 firstname: rows[0].firstname,
-                 lastname: rows[0].lastname,
-                 email: rows[0].email,
-                 address: rows[0].address,
-                 occupation: rows[0].occupation,
-                 bio: bio[0].bio,
-                 expertise: rows[0].expertise,
-
+                 token
              }),
          });
         } catch(error) {
