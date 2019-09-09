@@ -5,7 +5,7 @@ class Validations {
     static async validateSignup(req, res, next) {
         try {
             const schema = {
-        firstname: Joi.string()
+                firstname: Joi.string()
                     .trim()
                     .min(3)
                     .max(15)

@@ -9,7 +9,7 @@ class User {
      * @returns {objet} user object
      */
 
-     static async create({ firstname, lastname, email, password, address, bio, occupation, expertise }) {
+     static async create({firstname, lastname, email, password, address, bio, occupation, expertise }) {
         const createQuery =  `INSERT INTO
         users(firstname, lastname, email, password, address, bio, occupation, expertise)
         VALUES($1, $2, $3, $4, $5, $6, $7, $8)
