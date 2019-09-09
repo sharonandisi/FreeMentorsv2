@@ -1,7 +1,7 @@
-import UserModel from '../models/userModel';
 import authHelper from '../helpers/authHelper';
+import userModel from '../models/userModel';
 
-class User {
+class user {
     /**
      * @param {object} req
      * @param {object} res
@@ -14,7 +14,7 @@ class User {
 
         try {
          const hashpassword = authHelper.hashPassword(req.body.password.trim());
-         const rows = await UserModel.create({
+         const rows = await userModel.create({
              firstname: firstname.trim(),
              lastname: lastname.trim(),
              email: email.trim(),
@@ -24,8 +24,7 @@ class User {
              bio: bio.trim(),
              expertise:expertise.trim(),
          });
-
-         const token = authHelper.generateToken(rows[0].id);
+         const token = authHelper.generateToken({id:rows[0].id});
          return res.status(201).json({
              status: 201,
              message: 'successful',
@@ -34,7 +33,6 @@ class User {
                  firstname: rows[0].firstname,
                  lastname: rows[0].lastname,
                  email: rows[0].email,
-                 hashpassword: rows[0].password,
                  address: rows[0].address,
                  occupation: rows[0].occupation,
                  bio: bio[0].bio,
@@ -59,4 +57,4 @@ class User {
 }
 }
 
-export default User;
+export default user;
