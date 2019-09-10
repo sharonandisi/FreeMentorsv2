@@ -3,7 +3,7 @@
 import express from 'express';
 import '@babel/polyfill';
 import bodyParser from 'body-parser';
-import router from './src/routes/index';
+import router from './server/routes/index';
 
 
 const app = express();

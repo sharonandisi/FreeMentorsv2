@@ -33,7 +33,9 @@ pool.on('connect', () => {
          occupation VARCHAR(128) NOT NULL,
          bio VARCHAR(356) NOT NULL,
          expertise VARCHAR(128) NOT NULL,
-         mentorstatus BOOL DEFAULT 'false'
+         password VARCHAR(256) NOT NULL,
+         mentorstatus BOOL DEFAULT 'false',
+         isAdmin BOOL DEFAULT 'false'
      )`;
 
      pool.query(queryText)
@@ -58,8 +60,7 @@ pool.on('connect', () => {
         sessionstatus VARCHAR(64) DEFAULT 'pending',
         questions VARCHAR(356) NOT NULL,
         FOREIGN KEY (menteeEmail) REFERENCES users(email) ON DELETE CASCADE,
-        FOREIGN KEY (mentorid) REFERENCES users(id) ON DELETE CASCADE
-        
+        FOREIGN KEY (mentorid) REFERENCES users(id) ON DELETE CASCADE    
     )`;
 
     pool.query(queryText)
