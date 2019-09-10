@@ -48,6 +48,16 @@ class User {
         }
         return false
     }
+
+    static async findAdmin(id) {
+        const query = `SELECT FROM users WHERE isAdmin IS TRUE`
+        const values = [isAdmin]
+        const { rows } = await db.query(query, values)
+        if (rows) {
+            return rows[0];
+        }
+        return false
+    }
 }
     
 export default User;
