@@ -4,7 +4,7 @@ const User = {
     user001: {
         firstname: 'qwweri',
         lastname: 'andisi',
-        email: 'shay@gmail.com',
+        email: 'me@gmail.com',
         password: 'shay123',
         address: 'nairobi',
         occupation: 'mama',

@@ -53,8 +53,8 @@ class user {
     try{
         const { rows } = await db.query(text, [req.body.email]);
         const token = authHelper.generateToken({id:rows[0].id, email:rows[0].email});
-        return res.status(201).json({
-            status: 201,
+        return res.status(200).json({
+            status: 200,
             message: 'Successfully logged in',
             data: ({
                 token

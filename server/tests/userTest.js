@@ -11,19 +11,6 @@ chai.use(chaiHttp);
 
 describe('/Auth', () => {
     describe('/POST signup', () => {
-        // it('should successfully sign up a user', (done) => {
-        //     const { user001 } = testdata;
-        //     const user = User.create({...user001})
-        //     chai.request(app)
-        //         .post('/api/v1/auth/signup')
-        //         .send(user)
-        //         .end((err, res) => {
-        //             res.should.have.status(201);
-        //             if (err) return done();
-        //             done();
-        //         });
-        // });
-
         it('should not sign up a user missing a firstname', (done) => {
             chai.request(app)
                 .post('/api/v1/auth/signup')
