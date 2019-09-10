@@ -19,7 +19,7 @@ class User {
          return rows;
     }
 
-    static async login({email}) {
+    static async login(email) {
         const query = `SELECT * FROM users WHERE email = $1`;
         const values = [email]
         const { rows } = await db.query(query, values)
