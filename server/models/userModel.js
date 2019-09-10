@@ -49,6 +49,12 @@ class User {
         return false
     }
 
+    static async changeMentor(id) {
+        const text =await db.query(`UPDATE users SET mentorstatus = 'true' WHERE id = '${id}' RETURNING *`);
+        const { rows } = text;
+        return rows
+    }
+
 }
     
 export default User;

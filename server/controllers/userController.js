@@ -68,6 +68,28 @@ class user {
     }
 }
 
+    static async changeMentor(req,res) {
+        try{
+            const rows = await userModel.changeMentor(req.params.id);
+            const { mentorstatus } = rows[0];
+                return res.status(200).json({
+                    status: 200,
+                    message: 'User successfully changed to mentor',
+                    data: {mentorstatus},
+                });
+
+            }catch(error) {
+            return res.status(500).json({
+                status: 500,
+                error: 'Internal server error'
+            })  
+            }
+      }
+
+
+     
+
+
 }
 
 export default user;

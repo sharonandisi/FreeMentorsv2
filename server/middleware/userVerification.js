@@ -79,9 +79,21 @@ class Verify {
         return next();
     }
 
-
-
-
+    async verifyAdmin(req, res, next) {
+        const text = 'SELECT * FROM users WHERE email = $1';
+        const { rows } = await db.query(text, [req.body.email]);
+        let admin = "";
+        if (user.isAdmin) {
+            rows[0].isAdmin = user
+        }
+        if (!admin) {
+            return res.status(403).json({
+                status: 403,
+                error: 'Access denied',
+            });
+        }
+        return next();
+    }
 
 }
 

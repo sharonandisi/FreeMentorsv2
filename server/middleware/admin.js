@@ -8,7 +8,6 @@ class Admin {
 static async createAdmin(req, res, next) {
     const text = 'SELECT * FROM users WHERE email = $1';
     const { rows } = await db.query(text, [req.body.email]);
-    console.log(rows)
     const hashpassword = authHelper.hashPassword(process.env.ADMIN_PASSWORD);
     if (!rows[0].isAdmin) {
         userModel.createAdmin({

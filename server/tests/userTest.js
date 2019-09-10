@@ -4,6 +4,7 @@ import app from '../../server';
 import User from '../models/userModel';
 import '../../config';
 import testdata from './mockData/user';
+import authHelper from '../helpers/authHelper';
 
 const { expect } = chai;
 chai.should();
@@ -136,4 +137,46 @@ describe('/Auth', () => {
         })
     });
 
+    describe('PATCH /api/v1/auth/:userid', () => {
+
+        let id = '';
+        let token = '';
+
+        const execute = () => chai.request(app)
+            .patch(`/api/v1/auth/${id}`)
+            .set('x-auth-token', token);
+
+        it('should not change roles of a non existant user', async () => {
+            User.createAdmin({ ...testdata.admin });
+            const admin = User.findByEmail(process.env.ADMIN_EMAIL);
+            token = authHelper.generateToken({id:admin.id});
+            id = 2765786;
+            const res = await execute();
+            expect(res).to.have.status(404);
+            return done();
+        });
+
+        it('should check for admin before allowing change of status', async () => {
+            const { user001 } = testdata;
+            const user = User.create({ ...user001 });
+            token = authHelper.generateToken({id:user.id});
+            id = user.id;
+            const res = await execute();
+            expect(res).to.have.status(403);
+            return done();
+        });
+
+        it('should allow an admin to change a status', async () => {
+            const { user001 } = testdata;
+            const user = User.create({ ...user001 });
+            id = user.id;
+            User.createAdmin({ ...testdata.admin });
+            const admin = User.findByEmail(process.env.ADMIN_EMAIL);
+            token = authHelper.generateToken({id:admin.id});
+            const res = await execute();
+            expect(res).to.have.status(200);
+            return done();
+        });
+
+    })
 });
