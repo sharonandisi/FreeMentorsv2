@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import userModel from '../models/userModel';
 import authHelper from '../helpers/authHelper';
+import db from "../db";
 import '../../config';
 
 class Verify {
@@ -20,9 +21,10 @@ class Verify {
         return next();
     }
 
-    verifyRegistereduser(req, res, next) {
-        const user = userModel.findByEmail(req.body.email);
-        if (!user) {
+    async verifyRegistereduser(req, res, next) {
+        const text = 'SELECT * FROM users WHERE email = $1';
+        const { rows } = await db.query(text, [req.body.email]);
+        if (!rows[0]) {
             return res.status(400).json({
                 status: 400,
                 error: 'Please sign up to access this service',
@@ -43,9 +45,10 @@ class Verify {
         return next();
     }
 
-    verifyPassword(req, res, next) {
-        const user = userModel.findByEmail(req.body.email);
-        if (!authHelper.comparePassword(user.password, req.body.password)) {
+    async verifyPassword(req, res, next) {
+        const text = 'SELECT * FROM users WHERE email = $1';
+        const { rows } = await db.query(text, [req.body.email]);
+        if (!authHelper.comparePassword(rows[0].password, req.body.password)) {
             return res.status(401).json({
                 status: 401,
                 error: 'Please enter a valid password',

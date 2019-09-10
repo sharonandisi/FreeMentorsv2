@@ -11,17 +11,6 @@ chai.use(chaiHttp);
 
 describe('/Auth', () => {
     describe('/POST signup', () => {
-        // it('should successfully sign up a user', (done) => {
-        //     chai.request(app)
-        //         .post('/api/v1/auth/signup')
-        //         .send(testdata.user001)
-        //         .end((err, res) => {
-        //             res.should.have.status(201);
-        //             if (err) return done();
-        //             done();
-        //         });
-        // });
-
         it('should not sign up a user missing a firstname', (done) => {
             chai.request(app)
                 .post('/api/v1/auth/signup')
@@ -110,6 +99,41 @@ describe('/Auth', () => {
                     done();
                 });
         });
+    });
+
+    describe('/POST signin', () => {
+        it('should not sign in a user missing an email address', (done) => {
+            chai.request(app)
+                .post('/api/v1/auth/signin')
+                .send(testdata.user011)
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    if (err) return done();
+                    done()
+                });
+        });
+
+        it('should not sign in a user missing a password', (done) => {
+            chai.request(app)
+                .post('/api/v1/auth/signin')
+                .send(testdata.user012)
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    if (err) return done();
+                    done()
+                });
+        });
+
+        it('should not sign in a user that is not registered', (done) => {
+            chai.request(app)
+                .post('/api/v1/auth/signin')
+                .send(testdata.user013)
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    if (err) return done();
+                    done()
+                })
+        })
     });
 
 });

@@ -1,5 +1,6 @@
 import authHelper from '../helpers/authHelper';
 import userModel from '../models/userModel';
+import db from "../db";
 
 class user {
     /**
@@ -46,6 +47,25 @@ class user {
             })
         }
 
+}
+    static async login(req,res) {
+    const text = 'SELECT * FROM users WHERE email = $1';
+    try{
+        const { rows } = await db.query(text, [req.body.email]);
+        const token = authHelper.generateToken({id:rows[0].id, email:rows[0].email});
+        return res.status(200).json({
+            status: 200,
+            message: 'Successfully logged in',
+            data: ({
+                token
+            })
+        });
+    }catch(error) {
+        return res.status(500).json({
+            status: 500,
+            error: 'Internal server error'
+        })
+    }
 }
 }
 

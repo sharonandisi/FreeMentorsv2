@@ -4,7 +4,7 @@ const User = {
     user001: {
         firstname: 'qwweri',
         lastname: 'andisi',
-        email: 'shay@gmail.com',
+        email: 'me@gmail.com',
         password: 'shay123',
         address: 'nairobi',
         occupation: 'mama',
@@ -25,6 +25,16 @@ const User = {
 
     user003: {
         firstname: 'sharon',
+        lastname: '',
+        email: 'sharonandi@gmail.com',
+        password: 'shay123',
+        address: 'nairobi',
+        occupation: 'mama',
+        bio: 'I am a dev mama',
+    },
+
+    user004: {
+        firstname: 'sharon',
         lastname: 'andisi',
         email: '',
         password: 'shay123',
@@ -34,7 +44,7 @@ const User = {
         expertise: 'motherhood',
     },
 
-    user004: {
+    user005: {
         firstname: 'sharon',
         lastname: 'andisi',
         email: 'sharonisi@gmail.com',
@@ -45,7 +55,7 @@ const User = {
         expertise: 'motherhood',
     },
 
-    user005: {
+    user006: {
         firstname: 'sharon',
         lastname: 'andisi',
         email: 'sharoisi@gmail.com',
@@ -56,7 +66,7 @@ const User = {
         expertise: 'motherhood',
     },
 
-    user006: {
+    user007: {
         firstname: 'sharon',
         lastname: 'andisi',
         email: 'snandisi@gmail.com',
@@ -67,7 +77,7 @@ const User = {
         expertise: 'motherhood',
     },
 
-    user007: {
+    user008: {
         firstname: 'sharon',
         lastname: 'andisi',
         email: 'aronandisi@gmail.com',
@@ -78,7 +88,7 @@ const User = {
         expertise: 'motherhood',
     },
 
-    user008: {
+    user009: {
         firstname: 'sharon',
         lastname: 'andisi',
         email: 'sha@gmail.com',
@@ -89,6 +99,25 @@ const User = {
         expertise: '',
     },
 
+    user010: {
+        email: 'shay@gmail.com',
+        password: 'shay123',
+    },
+
+    user011: {
+        email: '',
+        password: 'shay123',
+    },
+
+    user012: {
+        email: 'shay@gmail.com',
+        password: '',
+    },
+
+    user13: {
+        email: 'qwertyui@gmail.com',
+        password: 'qwerty12345',
+    }
 };
 
 export default User;
