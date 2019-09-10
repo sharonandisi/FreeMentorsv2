@@ -18,6 +18,13 @@ class User {
          const { rows } = await db.query(createQuery, values);
          return rows;
     }
+
+    static async login({email}) {
+        const findbyEmail = `SELECT * FROM users WHERE email = $1`;
+        const { rows } = await db.query(findbyEmail, email)
+        return rows;
+
+    }
 }
     
 export default User;
