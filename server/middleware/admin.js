@@ -1,11 +1,16 @@
 import userModel from '../models/userModel';
 import authHelper from '../helpers/authHelper';
 import '../../config';
+import db from "../db";
 
-const createAdmin = (req, res, next) => {
-    const user = userModel.findAdmin();
+class Admin {
+
+static async createAdmin(req, res, next) {
+    const text = 'SELECT * FROM users WHERE email = $1';
+    const { rows } = await db.query(text, [req.body.email]);
+    console.log(rows)
     const hashpassword = authHelper.hashPassword(process.env.ADMIN_PASSWORD);
-    if (!user) {
+    if (!rows[0].isAdmin) {
         userModel.createAdmin({
             firstname: 'admin',
             lastname: 'admin',
@@ -21,4 +26,6 @@ const createAdmin = (req, res, next) => {
     next();
 };
 
-export default createAdmin;
+}
+
+export default Admin;
