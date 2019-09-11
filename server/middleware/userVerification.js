@@ -10,79 +10,71 @@ class Verify {
      * @param { object } data
      */
 
-    verifyUser(req, res, next) {
-        const user = userModel.findByEmail(req.body.email.trim());
-        if (user) {
-            return res.status(400).json({
-                status: 400,
-                error: 'This email is already in use',
-            });
-        }
+    async verifyUser(req, res, next) {
+        const user = await findByEmail(req.body.email);
+        if (user) return response(res, 400, messageHelper.users.auth.emailUnavailable)
         return next();
     }
 
     async verifyRegistereduser(req, res, next) {
-        const text = 'SELECT * FROM users WHERE email = $1';
-        const { rows } = await db.query(text, [req.body.email]);
-        if (!rows[0]) {
-            return res.status(400).json({
-                status: 400,
-                error: 'Please sign up to access this service',
-            });
-        }
+        const user = await findByEmail(req.body.email);
+        if (!user) return response(res, 400, messageHelper.users.failed.signinFail)
         return next();
     }
 
-    verifyexistingUser(req, res, next) {
-        const userid = req.decoded.payload;
-        const user = userModel.findOne(userid);
-        if (!user) {
-            return res.status(404).json({
-                status: 404,
-                error: 'User does not exist',
-            });
-        }
+    async verifyexistingUser(req, res, next) {
+        const { userid } = req.decoded;
+        const user = await userModel.findOne(userid);
+        if (!user) return response(res, 400, messageHelper.users.auth.notUSer)
         return next();
     }
 
     async verifyPassword(req, res, next) {
-        const text = 'SELECT * FROM users WHERE email = $1';
-        const { rows } = await db.query(text, [req.body.email]);
-        if (!authHelper.comparePassword(rows[0].password, req.body.password)) {
-            return res.status(401).json({
-                status: 401,
-                error: 'Please enter a valid password',
-            });
+        const user = await findByEmail(req.body.email);
+        if (!authHelper.comparePassword(user.password, req.body.password)) {
+            return response(res, 401, messageHelper.users.auth.invalidPassword)
         }
         return next();
     }
 
     verifyauthenUser(req, res, next) {
         const token = req.header('x-auth-token');
-
         if (!token) {
-            return res.status(401).json({
-                status: 401,
-                error: 'Failed to fetch token.Please try again',
-            });
+            return response(res, 401, messageHelper.users.auth.tokenFailure)
         }
-
         jwt.verify(token, process.env.SECRET, (error, decoded) => {
             if (error) {
-                return res.status(401).json({
-                    status: 401,
-                    error: 'Failed to fetch token.Please try again',
-                });
+                return response(res, 401, messageHelper.users.auth.tokenFailure)
             }
             req.decoded = decoded;
         });
         return next();
     }
 
+    async verifyAdmin(req, res, next) {
+        const { email } = req.decoded;
+        const user = await findByEmail(email);
+        if (!user.isadmin) return response(res, 403, messageHelper.users.auth.access)
+        return next();
+    }
 
+    async checkmentorStatus(req, res, next) {
+        const { mentorid } = req.body;
+        const mentor = await userModel.findOne(mentorid);
+        if (!mentor || mentor.mentorstatus !== 'true') {
+            return response(res, 400, messageHelper.users.auth.mentorStatus)
+        }
+        return next();
+    }
 
-
-
+    async verifyMentor(req, res, next) {
+        const { mentorid } = req.decoded.payload;
+        const mentor = await userModel.findOne(mentorid);
+        if (!mentor || User.mentorstatus !== 'true') {
+            return response(res, 403, messageHelper.users.auth.access)
+        }
+        return next()
+    }
 }
 
 export default new Verify();

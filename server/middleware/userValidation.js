@@ -54,12 +54,6 @@ class Validations {
                     .max(50)
                     .required()
                     .error(() => 'Expertise is a required field with a min of 3 chars with no special chars and numbers'),
-                mentorstatus: Joi.boolean()
-                    .required()
-                    .error(() => 'mentorstatus required. Can either be true or false'),
-                is_Admin: Joi.boolean()
-                    .required()
-                    .error(() => 'is_Admin required. Can either be true or false')
             };
             const { error } = Joi.validate(req.body, schema);
 
