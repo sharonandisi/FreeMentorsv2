@@ -1,6 +1,6 @@
 import authHelper from '../helpers/authHelper';
 import { create, findByEmail, changeMentor, } from '../models/userModel';
-import messageHelper from '../helpers/messageHepler';
+import messageHelper from '../helpers/messageHelper';
 import response from '../helpers/responseHelper';
 
 
