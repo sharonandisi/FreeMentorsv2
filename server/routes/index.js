@@ -4,8 +4,8 @@ import mentor from './mentorRoutes';
 
 const router = express.Router();
 
-router.use('/api/v1/auth', user);
-router.use('/api/v1/mentors', mentor);
+router.use('/api/v2/auth', user);
+router.use('/api/v2/mentors', mentor);
 
 
 export default router;
