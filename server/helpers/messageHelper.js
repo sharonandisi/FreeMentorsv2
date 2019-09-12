@@ -15,7 +15,8 @@ const messages = {
         mentors: {
             mentor: 'Success. Mentor found',
             mentors: 'Success. All mentors found',
-            noMentor: 'No mentors have been found'
+            noMentor: 'No mentors have been found',
+            changeMentor: 'User successfully changed to Mentor'
         },
 
         failed: {
