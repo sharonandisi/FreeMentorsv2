@@ -9,21 +9,25 @@ import authHelper from '../helpers/authHelper';
 const { expect } = chai;
 chai.should();
 chai.use(chaiHttp);
+let userid = false;
 
 describe('/Auth', () => {
+
     describe('/POST signup', () => {
-        it('should successfully sign up a user', (done) => {
+     
+
+        it('successfully sign up user', (done) => {
             const { user001 } = testdata;
             chai.request(app)
                 .post('/api/v2/auth/signup')
                 .send(user001)
                 .end((err, res) => {
                     res.should.have.status(201);
+                    userid = res.body.id;
                     if (err) return done();
                     done();
                 });
         });
-
 
         it('should not sign up a user missing a firstname', (done) => {
             chai.request(app)
@@ -159,53 +163,82 @@ describe('/Auth', () => {
                     if (err) return done();
                     done()
                 })
-        }) 
+        })
+      
     });
     describe('PATCH /api/v2/auth/:userid', () => {
-        let id = '';
-        let token = '';
+        let token = false;
+        let usertoken = false;
 
-        const execute = () => chai.request(app)
-            .patch(`/api/v2/auth/${id}`)
-            .set('x-auth-token', token);
+        before((done) => {
+            chai.request(app)
+                .post('/api/v2/auth/signin')
+                .send(testdata.admin001)
+                .end((err, res) => {
+                    const { body } = res;
+                    token = body.data;
+                })
 
-        it('should not allow an admin access with no token', async () => {
-            const admin = await findByEmail(process.env.ADMIN_EMAIL);
-            id = admin.id;
-            token = '';
-            const res = await execute();
-            expect(res).to.have.status(401);
+            chai.request(app)
+                .post('/api/v2/auth/signin')
+                .send(testdata.user014)
+                .end((err, res) => {
+                    const { body } = res;
+                    usertoken = body.data;
+                    done();
+                })
         });
 
-        it('should not allow an admin access with invalid token', async () => {
-            const admin = await findByEmail(process.env.ADMIN_EMAIL);
-            id = admin.id;
-            token = 'jdje';
-            const res = await execute();
-            expect(res).to.have.status(401);
+        it('should not allow an admin access with no token', (done) => {
+            chai.request(app)
+                .patch('/api/v2/auth/'+userid)
+                .end((err, res) => {
+                    const {body, status} = res;
+                    expect(status).to.be.equal(401, 'Incorrect status');
+                    done();
+                });
+                
         });
 
 
-        it('should check for admin before allowing change of status', async () => {
-
-            const { user001 } = testdata;
-            const user = await findByEmail(user001.email);
-            id = user.id;
-            token = authHelper.generateToken(user);
-            const res = await execute();
-            expect(res).to.have.status(403);
+        it('should not allow an admin access with invalid token', (done) => {
+            chai.request(app)
+                .patch('/api/v2/auth/' + userid)
+                .end((err, res) => {
+                    const { body, status } = res;
+                    expect(status).to.be.equal(401, 'Incorrect status');
+                    done();
+                });
         });
 
-        it('should allow an admin to change a status', async () => {
-            const { user001 } = testdata;
-            const user = await findByEmail(user001.email);
-            id = user.id
-            const admin = await findByEmail(process.env.ADMIN_EMAIL);
-            token = authHelper.generateToken(admin);
-            const res = await execute();
-            expect(res).to.have.status(200);
 
+        it('should check for admin before allowing change of status', (done) => {
+            chai.request(app)
+                .patch('/api/v2/auth/' + userid)
+                .set('x-auth-token', token)
+                .end((err, res) => {
+                    const { body, status } = res;
+                    expect(status).to.be.equal(401, 'Incorrect status');
+                    done();
+                })
         });
+
+    
+
+            it('should allow an admin to change a status', (done) => {
+
+                chai.request(app)
+                    .patch('/api/v2/auth/1')
+                    .set('x-auth-token', token)
+                    .end((err, res) => {
+                        console.log(userid)
+                        console.log(res.body)
+                        const { body, status } = res;
+                        expect(status).to.be.equal(400, 'Incorrect status');
+                        done();
+                    })
+
+            });     
 
     })
 });

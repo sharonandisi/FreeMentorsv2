@@ -49,27 +49,35 @@ import response from '../helpers/responseHelper';
     }
 
     async function verifyAdmin(req, res, next) {
-        const { email } = req.decoded;
-        const user = await findByEmail(email);
-        if (!user.isadmin) return response(res, 403, messageHelper.users.auth.access)
+        const { isadmin, id } = req.decoded;
+        if (!isadmin) return response(res, 403, messageHelper.users.auth.access)
+        if (id == req.params.id) return response(res, 400, messageHelper.users.auth.selfChangementor)
         return next();
     }
 
     async function checkmentorStatus(req, res, next) {
         const { mentorid } = req.body;
         const mentor = await findOne(mentorid);
-        if (!mentor || mentor.mentorstatus !== 'true') {
+        if (!mentor || !mentor.mentorstatus) {
             return response(res, 400, messageHelper.users.auth.mentorStatus)
         }
         return next();
     }
 
     async function verifyMentor(req, res, next) {
-        const { mentorid } = req.decoded.payload;
+        const { id:mentorid } = req.decoded;
         const mentor = await findOne(mentorid);
-        if (!mentor || User.mentorstatus !== 'true') {
+        if (!mentor.mentorstatus) {
             return response(res, 403, messageHelper.users.auth.access)
         }
+        return next()
+    }
+
+    async function checkIfMentor(req, res, next) {
+        const mentorid = req.params.id;
+        if (parseInt(mentorid) < 1 || parseInt(mentorid) > 1000 || typeof(mentorid) !== 'number') return response(res, 400, messageHelper.users.failed.failed)
+        const {mentorstatus} = await findOne(mentorid);
+        if (mentorstatus) return response(res, 409, messageHelper.users.mentors.mentorChangeConflict)
         return next()
     }
 module.exports = {
@@ -80,5 +88,6 @@ module.exports = {
     verifyauthenUser,
     verifyAdmin,
     checkmentorStatus,
-    verifyMentor
+    verifyMentor,
+    checkIfMentor
 }

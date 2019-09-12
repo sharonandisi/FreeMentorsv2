@@ -130,6 +130,10 @@ const User = {
         expertise: 'administration',
         isAdmin: true,
     },
+    admin001: {
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+    },
     user014: {
         firstname: 'iyke',
         lastname: 'cadeau',
@@ -140,6 +144,11 @@ const User = {
         occupation: 'developer',
         expertise: 'software',
     },
+    user015: {
+        email: 'thomas@gmail.com',
+        password: 'dgewhgdgewgkcg',
+    },
+
     session001: {
         mentorid: 329329,
         questions: 'How to do you create cat videos?'
