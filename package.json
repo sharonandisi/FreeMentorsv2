@@ -13,8 +13,7 @@
     "create": "babel-node ./server/db/dbInit createTables",
     "drop": "babel-node ./server/db/dbDestroy dropTables",
     "start-test": "NODE_ENV=test npm run drop && NODE_ENV=test npm run create && NODE_ENV=test nyc mocha ./server/tests/*.js --require @babel/register --timeout 10000000 --exit",
-    "test-session": "NODE_ENV=test npm run drop && NODE_ENV=test npm run create && NODE_ENV=test nyc mocha ./server/tests/session.test.js --require @babel/register --timeout 10000000 --exit",
-    "dev":"babel-node ./server.js"
+    "test-session": "NODE_ENV=test npm run drop && NODE_ENV=test npm run create && NODE_ENV=test nyc mocha ./server/tests/session.test.js --require @babel/register --timeout 10000000 --exit"
   },
   "repository": {
     "type": "git",
