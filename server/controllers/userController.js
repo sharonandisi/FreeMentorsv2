@@ -36,13 +36,13 @@ async function login(req, res) {
 async function ChangeMentor(req, res) {
     try {
         const rows = await changeMentor(req.params.id);
-        console.log(rows)
         const { mentorstatus } = rows;
-        return response(res, 200, messageHelper.users.changeMentor, { mentorstatus })
+        return response(res, 200, messageHelper.users.mentors.changeMentor, { mentorstatus })
     } catch (error) {
         return response(res, 500, messageHelper.users.failed.catchError)
     }
 }
+
 module.exports = {
     Create,
     login,

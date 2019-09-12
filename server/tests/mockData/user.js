@@ -1,15 +1,16 @@
 import '../../../config';
 
+
 const User = {
     user001: {
-        firstname: 'qwweri',
+        firstname: 'sharon',
         lastname: 'andisi',
-        email: 'me@gmail.com',
-        password: 'shay123',
+        email: 'thomas@gmail.com',
+        password: 'shayert',
         address: 'nairobi',
-        occupation: 'mama',
-        bio: 'I am a dev mama',
-        expertise: 'motherhood',
+        bio: 'mama simi',
+        occupation: 'developer',
+        expertise: 'software',
     },
 
     user002: {
@@ -100,8 +101,8 @@ const User = {
     },
 
     user010: {
-        email: 'shay@gmail.com',
-        password: 'shay123',
+        email: 'thomas@gmail.com',
+        password: 'shayert',
     },
 
     user011: {
@@ -117,7 +118,38 @@ const User = {
     user13: {
         email: 'qwertyui@gmail.com',
         password: 'qwerty12345',
-    }
+    },
+    admin: {
+        firstname: 'admin',
+        lastname: 'admin',
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+        address: 'adminville',
+        occupation: 'Administrator',
+        bio: 'I am admin',
+        expertise: 'administration',
+        isAdmin: true,
+    },
+    user014: {
+        firstname: 'iyke',
+        lastname: 'cadeau',
+        email: 'baba@gmail.com',
+        password: 'shayert',
+        address: 'nairobi',
+        bio: 'mama simi',
+        occupation: 'developer',
+        expertise: 'software',
+    },
+    session001: {
+        mentorid: 329329,
+        questions: 'How to do you create cat videos?'
+
+    },
+    session002: {
+        questions: 'How to do you create cat videos?'
+
+    },
+
 };
 
 export default User;
