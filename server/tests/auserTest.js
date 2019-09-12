@@ -211,17 +211,5 @@ describe('/Auth', () => {
                 });
         });
 
-
-        it('should check for admin before allowing change of status', (done) => {
-            chai.request(app)
-                .patch('/api/v2/auth/' + userid)
-                .set('x-auth-token', token)
-                .end((err, res) => {
-                    const { body, status } = res;
-                    expect(status).to.be.equal(401, 'Incorrect status');
-                    done();
-                })
-        });
-
     })
 });

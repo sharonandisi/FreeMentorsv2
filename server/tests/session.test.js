@@ -43,7 +43,11 @@ describe('Master describe', () =>{
             chai.request(app)
                 .post(`${endpoint}/`)
                 .set('x-auth-token', token)
+<<<<<<< HEAD
                 .send(mockData.session002)
+=======
+                .send(mockData.session001)
+>>>>>>> 4c697ebe6f48afc8c1738acc95741f8bdcd42c4f
                 .end((err, res) => {
                     const { body, status } = res;
                     expect(status).to.be.equal(400, 'Status not correct');
