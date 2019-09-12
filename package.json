@@ -12,7 +12,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "create": "babel-node ./server/db/dbInit createTables",
     "drop": "babel-node ./server/db/dbDestroy dropTables",
-    "start-test": "NODE_ENV=test npm run drop && npm run create && nyc mocha ./server/tests/*.js --require @babel/register --timeout 10000000 --exit"
+    "start-test":"NODE_ENV=test npm run drop && NODE_ENV=test npm run create && NODE_ENV=test nyc mocha ./server/tests/*.js --require @babel/register --timeout 10000000 --exit"
   },
   "repository": {
     "type": "git",
