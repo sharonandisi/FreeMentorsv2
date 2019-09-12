@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { findByEmail } from '../models/userModel';
+import { findByEmail, findOne } from '../models/userModel';
 import authHelper from '../helpers/authHelper';
 import '../../config';
 import messageHelper from '../helpers/messageHelper';
@@ -57,7 +57,7 @@ import response from '../helpers/responseHelper';
 
     async function checkmentorStatus(req, res, next) {
         const { mentorid } = req.body;
-        const mentor = await userModel.findOne(mentorid);
+        const mentor = await findOne(mentorid);
         if (!mentor || mentor.mentorstatus !== 'true') {
             return response(res, 400, messageHelper.users.auth.mentorStatus)
         }
@@ -66,7 +66,7 @@ import response from '../helpers/responseHelper';
 
     async function verifyMentor(req, res, next) {
         const { mentorid } = req.decoded.payload;
-        const mentor = await userModel.findOne(mentorid);
+        const mentor = await findOne(mentorid);
         if (!mentor || User.mentorstatus !== 'true') {
             return response(res, 403, messageHelper.users.auth.access)
         }
