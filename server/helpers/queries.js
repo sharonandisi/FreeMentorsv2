@@ -20,9 +20,9 @@ const queries = {
         returning*`,
         findOne: `SELECT * FROM sessions WHERE id =$1`,
         findmenteeSession: `SELECT * FROM sessions WHERE menteeEmail = $1`,
-        findmentorSession: `SELECT FROM sessions WHERE mentorid = $1`,
-        decline: `UPDATE sessions WHERE sessionstatus = 'rejected' returning*`,
-        accept: `UPDATE sessions WHERE sessionstatus = 'accepted' returning*`
+        findmentorSession: `SELECT * FROM sessions WHERE mentorid = $1`,
+        decline: `UPDATE sessions SET sessionstatus = 'rejected' WHERE id =$1 returning *`,
+        accept: `UPDATE sessions SET sessionstatus = 'accepted' WHERE id =$1 returning *`
     },
 
     createTables: {

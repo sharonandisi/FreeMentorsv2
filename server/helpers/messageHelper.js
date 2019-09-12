@@ -9,14 +9,17 @@ const messages = {
             invalidPassword: 'Please enter a valid password',
             tokenFailure: 'Failed to fetch token.Please try again',
             access: 'Access denied',
-            mentorStatus: 'Mentor status not activated'
+            mentorStatus: 'Mentor status not activated',
+            selfChangementor: 'You cannot change yourself to a mentor'
         },
 
         mentors: {
             mentor: 'Success. Mentor found',
             mentors: 'Success. All mentors found',
             noMentor: 'No mentors have been found',
-            changeMentor: 'User successfully changed to Mentor'
+            changeMentor: 'User successfully changed to Mentor', 
+            mentorToMentoError: 'A mentor cannot request sessions',
+            mentorChangeConflict: 'You cannot change a mentor twice'
         },
 
         failed: {
@@ -29,10 +32,12 @@ const messages = {
         sessions: {
             session: 'Session successfully created',
             notSession: 'Session does not exist',
+            pendingSession: 'Cannot request a session with one pending',
             acceptConflict: 'Conflict. Session already accepted',
             rejectConflict: 'Conflict.Session already rejected',
             accept: 'Session request accepted',
-            decline: 'Session request rejected'
+            decline: 'Session request rejected',
+            mentorSessionRequest: 'Mentors cannot request sessions'
         }
     }
 }

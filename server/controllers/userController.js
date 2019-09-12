@@ -33,7 +33,7 @@ async function login(req, res) {
     }
 }
 
-async function ChangeMentor(req, res) {
+async function ChangeMentor(req, res) {   
     try {
         const rows = await changeMentor(req.params.id);
         const { mentorstatus } = rows;
