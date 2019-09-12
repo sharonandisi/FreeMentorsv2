@@ -1,4 +1,4 @@
-import { findOne } from '../models/userModel';
+import { findOne, findMentor } from '../models/userModel';
 import response from '../helpers/responseHelper';
 import messageHelper from '../helpers/messageHelper';
 
