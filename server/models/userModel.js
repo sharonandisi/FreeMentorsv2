@@ -39,6 +39,7 @@ async function changeMentor(id) {
 }
 
 async function findMentor() {
+    console.log('here')
     const { rows } = await query(queries.users.findMentor)
     if (rows) {
         return rows
