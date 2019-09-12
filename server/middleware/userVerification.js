@@ -75,7 +75,7 @@ import response from '../helpers/responseHelper';
 
     async function checkIfMentor(req, res, next) {
         const mentorid = req.params.id;
-        if (parseInt(mentorid) < 1 || parseInt(mentorid) > 1000 || typeof(mentorid) !== 'number') return response(res, 400, messageHelper.users.failed.failed)
+        if (parseInt(mentorid) < 1 || parseInt(mentorid) > 1000 || typeof(mentorid) === 'number') return response(res, 400, messageHelper.users.failed.failed)
         const {mentorstatus} = await findOne(mentorid);
         if (mentorstatus) return response(res, 409, messageHelper.users.mentors.mentorChangeConflict)
         return next()
