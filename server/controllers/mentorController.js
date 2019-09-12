@@ -1,6 +1,22 @@
-import { findOne, findMentor } from '../models/userModel';
+import { findMentor, findOne } from '../models/userModel';
 import response from '../helpers/responseHelper';
 import messageHelper from '../helpers/messageHelper';
+
+async function fetchAllMentors(req, res) {
+    try {
+        const mentor = await findMentor();
+        const mentors = mentor.map(({ id: mentorid, firstname, lastname, email, address, occupation, bio, expertise, mentorstatus, isAdmin, }) => ({
+            mentorid, firstname, lastname, email, address, occupation, bio, expertise, mentorstatus, isAdmin,
+        }));
+
+        if (mentors.length) {
+            return response(res, 200, messageHelper.users.mentors.mentors, mentors)
+        }
+        return response(res, 404, messageHelper.users.mentors.noMentor)
+    } catch (error) {
+        return response(res, 500, messageHelper.users.failed.catchError)
+    }
+}
 
 async function fetchSpecificMentor(req, res) {
     try {
@@ -19,22 +35,8 @@ async function fetchSpecificMentor(req, res) {
         return response(res, 500, messageHelper.users.failed.catchError)
     }
 }
-async function fetchAllMentors(req, res) {
-    try {
-        const mentor = await findMentor();
-        const mentors = mentor.map(({ id: mentorid, firstname, lastname, email, address, occupation, bio, expertise, mentorstatus, isAdmin, }) => ({
-            mentorid, firstname, lastname, email, address, occupation, bio, expertise, mentorstatus, isAdmin,
-        }));
-
-        if (mentors.length) {
-            return response(res, 200, messageHelper.users.mentors.mentors, mentors)
-        }
-        return response(res, 404, messageHelper.users.mentors.noMentor)
-    } catch (error) {
-        return response(res, 500, messageHelper.users.failed.catchError)
-    }
-}
 module.exports = {
-    fetchSpecificMentor,
-    fetchAllMentors
+    fetchAllMentors,
+    fetchSpecificMentor
 }
+

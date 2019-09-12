@@ -15,7 +15,7 @@ describe('/Auth', () => {
         it('should successfully sign up a user', (done) => {
             const { user001 } = testdata;
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(user001)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -27,7 +27,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing a firstname', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user002)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -38,7 +38,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing a lastname', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user003)
                 .end((err, res) => {
                     res.should.have.status(400);
@@ -50,7 +50,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing an email address', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user004)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -61,7 +61,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing a password', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user005)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -72,7 +72,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing an address', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user006)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -83,7 +83,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing a bio', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user007)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -94,7 +94,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing an occupation', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user008)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -105,7 +105,7 @@ describe('/Auth', () => {
 
         it('should not sign up a user missing an expertise', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signup')
+                .post('/api/v2/auth/signup')
                 .send(testdata.user009)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -119,7 +119,7 @@ describe('/Auth', () => {
         it('should successfully sign in a user', (done) => {
             const { user010 } = testdata;
             chai.request(app)
-                .post('/api/v1/auth/signin')
+                .post('/api/v2/auth/signin')
                 .send(user010)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -130,7 +130,7 @@ describe('/Auth', () => {
 
         it('should not sign in a user missing an email address', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signin')
+                .post('/api/v2/auth/signin')
                 .send(testdata.user011)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -141,7 +141,7 @@ describe('/Auth', () => {
 
         it('should not sign in a user missing a password', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signin')
+                .post('/api/v2/auth/signin')
                 .send(testdata.user012)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -152,7 +152,7 @@ describe('/Auth', () => {
 
         it('should not sign in a user that is not registered', (done) => {
             chai.request(app)
-                .post('/api/v1/auth/signin')
+                .post('/api/v2/auth/signin')
                 .send(testdata.user013)
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -161,12 +161,12 @@ describe('/Auth', () => {
                 })
         }) 
     });
-    describe('PATCH /api/v1/auth/:userid', () => {
+    describe('PATCH /api/v2/auth/:userid', () => {
         let id = '';
         let token = '';
 
         const execute = () => chai.request(app)
-            .patch(`/api/v1/auth/${id}`)
+            .patch(`/api/v2/auth/${id}`)
             .set('x-auth-token', token);
 
         it('should not allow an admin access with no token', async () => {

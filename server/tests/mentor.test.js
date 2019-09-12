@@ -10,12 +10,12 @@ const { expect } = chai;
 chai.should();
 chai.use(chaiHttp);
 
-describe('GET /api/v1/mentors/mentors/:mentorid', () => {
+describe('GET /api/v2/mentors/mentors/:mentorid', () => {
     let mentorid = '';
     let token = '';
 
     const execute = () => chai.request(app)
-        .get(`/api/v1/mentors/mentors/${mentorid}`)
+        .get(`/api/v2/mentors/mentors/${mentorid}`)
         .set('x-auth-token', token);
 
     it('should not get a mentor if the user making the request has no token', async () => {
@@ -37,7 +37,7 @@ describe('/GET  all mentors', () => {
 
     let token = '';
     const execute = () => chai.request(app)
-        .get('/api/v1/mentors/mentors')
+        .get('/api/v2/mentors/mentors')
         .set('x-auth-token', token);
 
     it('should not get mentors when the user has no token', async () => {
@@ -52,11 +52,4 @@ describe('/GET  all mentors', () => {
         expect(res).to.have.status(401);
     });
 
-    it('should get mentors if user is authenticated', async () => {
-        const { user001 } = testdata;
-        const user = await findByEmail(user001.email);
-        token = authHelper.generateToken(user);
-        const res = await execute();
-        expect(res).to.have.status(200);
-    });
 });
