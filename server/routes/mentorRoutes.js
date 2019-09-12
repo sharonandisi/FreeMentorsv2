@@ -5,5 +5,6 @@ import { verifyauthenUser} from '../middleware/userVerification';
 const router = express.Router();
 
 router.get('/:mentorid', verifyauthenUser, fetchSpecificMentor)
+router.get('/mentors', verifyauthenUser, fetchAllMentors);
 
 export default router;
